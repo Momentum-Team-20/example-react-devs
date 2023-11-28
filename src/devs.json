@@ -1,0 +1,11 @@
+[
+  {
+    "name": "Jon",
+    "expertise": "JavaScript, Python, HTML, CSS"
+  },
+  { "name": "Freddie", "expertise": "JavaScript, Python, HTML, CSS++" },
+  { "name": "Jordan", "expertise": "JavaScript, Python, HTML, CSS++" },
+  { "name": "Kelsey", "expertise": "JavaScript, Python, HTML, CSS++" },
+  { "name": "Maria", "expertise": "JavaScript, Python, HTML, CSS++" },
+  { "name": "Jose", "expertise": "JavaScript, Python, HTML, CSS++" }
+]
