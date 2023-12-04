@@ -1,8 +1,18 @@
 import './App.css'
-import devs from './devs.json'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 function App() {
+  const [devs, setDevs] = useState([])
+
+  useEffect(() => {
+    console.log('useEffect runs')
+    axios
+      .get('https://node-api-devs-for-hire.glitch.me/devs')
+      .then((res) => setDevs(res.data))
+  }, [])
+
+  console.log('render runs')
   return (
     <div>
       <h1>Developers for Hire</h1>
@@ -10,6 +20,7 @@ function App() {
         {/* loop through the array of devs and make one li for each */}
         {devs.map((dev) => (
           <Developer
+            key={dev.id}
             name={dev.name}
             expertise={dev.expertise}
             greeting={'Hi hello'}
