@@ -4,15 +4,31 @@ import axios from 'axios'
 
 function App() {
   const [devs, setDevs] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [selectedDev, setSelectedDev] = useState('')
 
   useEffect(() => {
     console.log('useEffect runs')
-    axios
-      .get('https://node-api-devs-for-hire.glitch.me/devs')
-      .then((res) => setDevs(res.data))
+    axios.get('https://node-api-devs-for-hire.glitch.me/devs').then((res) => {
+      setLoading(false)
+      setDevs(res.data)
+    })
   }, [])
 
   console.log('render runs')
+  if (loading) {
+    return <h1>🍍 Loading... 🍍</h1>
+  }
+
+  if (selectedDev) {
+    return (
+      <div>
+        <button onClick={() => setSelectedDev('')}>Back to list</button>
+        <h2>{selectedDev}</h2>
+      </div>
+    )
+  }
+
   return (
     <div>
       <h1>Developers for Hire</h1>
@@ -24,6 +40,7 @@ function App() {
             name={dev.name}
             expertise={dev.expertise}
             greeting={'Hi hello'}
+            selectDev={setSelectedDev}
           />
         ))}
       </div>
@@ -32,18 +49,13 @@ function App() {
 }
 
 function Developer(props) {
-  const [expanded, setExpanded] = useState(false)
   const handleClick = () => {
-    // expanded = !expanded // this is bad
-    setExpanded(!expanded) // this is good
+    props.selectDev(props.name)
   }
   return (
     <div>
       <h2>{props.name}</h2>
-      <button onClick={handleClick}>
-        {expanded ? 'show less' : 'show more'}
-      </button>
-      {expanded && <p>{props.expertise}</p>}
+      <button onClick={handleClick}>Select</button>
     </div>
   )
 }
