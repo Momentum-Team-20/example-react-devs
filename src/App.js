@@ -1,11 +1,15 @@
 import './App.css'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import DeveloperDetail from './components/DeveloperDetail'
+import Developer from './components/Developer'
 
 function App() {
   const [devs, setDevs] = useState([])
   const [loading, setLoading] = useState(true)
   const [selectedDev, setSelectedDev] = useState('')
+  const [selectedDevGitHub, setSelectedDevGitHub] = useState('')
+  const [exclamation, setExclamation] = useState('Why not select Freddie?')
 
   useEffect(() => {
     console.log('useEffect runs')
@@ -15,6 +19,12 @@ function App() {
     })
   }, [])
 
+  const selectDev = (name, gitHub) => {
+    console.log('selectDev runs')
+    setSelectedDev(name)
+    setSelectedDevGitHub(gitHub)
+  }
+
   console.log('render runs')
   if (loading) {
     return <h1>🍍 Loading... 🍍</h1>
@@ -22,10 +32,12 @@ function App() {
 
   if (selectedDev) {
     return (
-      <div>
-        <button onClick={() => setSelectedDev('')}>Back to list</button>
-        <h2>{selectedDev}</h2>
-      </div>
+      <DeveloperDetail
+        selectedDev={selectedDev}
+        gitHub={selectedDevGitHub}
+        setSelectedDev={setSelectedDev}
+        exclamation={exclamation}
+      />
     )
   }
 
@@ -38,9 +50,12 @@ function App() {
           <Developer
             key={dev.id}
             name={dev.name}
+            gitHub={dev.gitHub}
             expertise={dev.expertise}
             greeting={'Hi hello'}
-            selectDev={setSelectedDev}
+            selectDev={selectDev}
+            exclamation={exclamation}
+            setExclamation={setExclamation}
           />
         ))}
       </div>
@@ -48,16 +63,6 @@ function App() {
   )
 }
 
-function Developer(props) {
-  const handleClick = () => {
-    props.selectDev(props.name)
-  }
-  return (
-    <div>
-      <h2>{props.name}</h2>
-      <button onClick={handleClick}>Select</button>
-    </div>
-  )
-}
+
 
 export default App
