@@ -14,7 +14,7 @@ const DeveloperDetail = ({
       console.log(res.data)
       setRepos(res.data)
     })
-  }, [])
+  }, [gitHub])
 
   return (
     <div>
